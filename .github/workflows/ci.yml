@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12", "3.14"]
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Histarr
+        run: python -m pip install --no-deps -e .
+      - name: Compile package
+        run: python -m compileall -q src tests
+      - name: Run regression tests
+        run: |
+          python tests/test_metadata_retry.py
+          python tests/test_incremental_export.py
+          python tests/test_tautulli_export.py
+          python tests/test_combined_export.py
+      - name: Smoke-test entry points
+        run: |
+          histarr --help
+          python -m histarr --help

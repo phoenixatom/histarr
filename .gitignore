@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+*.whl
+pip-wheel-metadata/
+
+# Test and tool caches
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+
+# Histarr private/runtime data
+histarr-exports/
+plex-history-exports/
+local-data/
+.histarr-cache.json
+.plex-history-exporter-cache.json
+credentials.json
+*.env
+.env*
+*.log
+
+# Editors and operating systems
+.DS_Store
+._*
+Thumbs.db
+.direnv/
+.idea/
+.vscode/
+*.swp
+*~
